@@ -1,29 +1,31 @@
 import { useState, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import type { Session } from '@supabase/supabase-js'
 import { supabase } from '../service/supabase'
+import type { Session } from '@supabase/supabase-js'
 
 // import components
 import { LoginScreen, HomeScreen } from '../screens'
 import HeaderRight from '../components/home/HeaderRight'
+import { IconMenu } from '../components/icons'
 
 const Stack = createNativeStackNavigator()
 
 export default function NavigationApp() {
 	const [session, setSession] = useState<Session | null>(null)
 	console.log(session)
+	const imageUser =
+		session?.user.user_metadata.picture ??
+		'https://randomuser.me/api/portraits/men/33.jpg'
 
 	useEffect(() => {
 		supabase.auth.getSession().then(({ data: { session } }) => {
-			// dispatch(setUser(session?.user.user_metadata ?? null))
 			setSession(session)
 		})
 
 		const {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange((_event, session) => {
-			// dispatch(setUser(session?.user.user_metadata ?? null))
 			setSession(session)
 		})
 
@@ -44,15 +46,10 @@ export default function NavigationApp() {
 						name="Home"
 						component={HomeScreen}
 						options={{
-							title: '',
-							headerRight: () => (
-								<HeaderRight
-									uriImage={
-										session?.user.user_metadata.picture ??
-										'https://randomuser.me/api/portraits/men/33.jpg'
-									}
-								/>
-							),
+							// title: 'Home',
+							headerTitleAlign: 'center',
+							headerLeft: () => <IconMenu size={24} />,
+							headerRight: () => <HeaderRight uriImage={imageUser} />,
 						}}
 					/>
 				) : (
