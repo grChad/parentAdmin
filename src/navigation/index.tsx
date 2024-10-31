@@ -41,7 +41,16 @@ export default function NavigationApp() {
 				{session ? (
 					<Stack.Screen name="Home" component={HomeScreen} />
 				) : (
-					<Stack.Screen name="Login" component={LoginScreen} />
+					<Stack.Screen
+						name="Login"
+						component={LoginScreen}
+						options={{
+							headerShown: false,
+							statusBarTranslucent: true,
+							statusBarColor: 'transparent',
+							navigationBarHidden: true,
+						}}
+					/>
 				)}
 			</Stack.Navigator>
 		</NavigationContainer>
