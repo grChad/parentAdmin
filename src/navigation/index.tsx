@@ -6,6 +6,7 @@ import { supabase } from '../service/supabase'
 
 // import components
 import { LoginScreen, HomeScreen } from '../screens'
+import HeaderRight from '../components/home/HeaderRight'
 
 const Stack = createNativeStackNavigator()
 
@@ -39,7 +40,21 @@ export default function NavigationApp() {
 				}}
 			>
 				{session ? (
-					<Stack.Screen name="Home" component={HomeScreen} />
+					<Stack.Screen
+						name="Home"
+						component={HomeScreen}
+						options={{
+							title: '',
+							headerRight: () => (
+								<HeaderRight
+									uriImage={
+										session?.user.user_metadata.picture ??
+										'https://randomuser.me/api/portraits/men/33.jpg'
+									}
+								/>
+							),
+						}}
+					/>
 				) : (
 					<Stack.Screen
 						name="Login"
