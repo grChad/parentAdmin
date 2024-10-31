@@ -60,6 +60,7 @@ export default function NavigationApp() {
 							headerShown: false,
 							statusBarTranslucent: true,
 							statusBarColor: 'transparent',
+							statusBarStyle: 'light',
 							navigationBarHidden: true,
 						}}
 					/>
