@@ -1,14 +1,13 @@
 import { View, Text, Button } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { SignOut } from '../../service/supabase'
 
 export default function HomeScreen() {
-	const navigation = useNavigation()
-
 	return (
 		<View>
 			<Text>Home Screen</Text>
 
-			<Button title="to Login" onPress={() => navigation.navigate('Login')} />
+			<View style={{ marginVertical: 20 }} />
+			<Button title="Sign Out" onPress={SignOut} />
 		</View>
 	)
 }

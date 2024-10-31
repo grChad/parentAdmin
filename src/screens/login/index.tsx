@@ -1,14 +1,12 @@
-import { View, Text, Button } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { View, Text } from 'react-native'
+import ButtonSignIn from './ButtonSignIn'
 
 export default function LoginScreen() {
-	const navigation = useNavigation()
-
 	return (
 		<View>
 			<Text>Login Screen</Text>
 
-			<Button title="to Home" onPress={() => navigation.goBack()} />
+			<ButtonSignIn />
 		</View>
 	)
 }
