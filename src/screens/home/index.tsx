@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { View, Text, FlatList, StyleSheet } from 'react-native'
+import { View, FlatList } from 'react-native'
 import { supabase } from '../../service/supabase'
 import { useAppDispatch } from '../../hooks/store'
 import { setDataQuiz } from '../../store/ducks/quizSlices'
-import { useScheme } from '../../hooks/colorScheme'
 import CardCourse from './CardCourse'
+import Banner from './Banner'
 
 type ListCourses = {
 	course: string
@@ -12,7 +12,6 @@ type ListCourses = {
 }
 
 export default function HomeScreen() {
-	const scheme = useScheme()
 	// const [updateQuiz, setUpdateQuiz] = useState(0)
 	const [listCourses, setListCourses] = useState<ListCourses[]>([])
 	const dispatch = useAppDispatch()
@@ -40,9 +39,10 @@ export default function HomeScreen() {
 		getDataQuiz()
 	}, [])
 	// }, [updateQuiz])
+
 	return (
 		<View style={{ flex: 1 }}>
-			<Text style={[styles.text, { color: scheme.text }]}>Vamos a jugar</Text>
+			<Banner />
 
 			<FlatList
 				data={listCourses}
@@ -55,12 +55,3 @@ export default function HomeScreen() {
 		</View>
 	)
 }
-
-const styles = StyleSheet.create({
-	text: {
-		fontFamily: 'ComicNeue',
-		fontSize: 18,
-		marginTop: 10,
-		marginLeft: 20,
-	},
-})
