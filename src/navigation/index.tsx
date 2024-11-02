@@ -13,10 +13,7 @@ const Stack = createNativeStackNavigator()
 
 export default function NavigationApp() {
 	const [session, setSession] = useState<Session | null>(null)
-	const imageUser =
-		session?.user.user_metadata.picture ??
-		'https://randomuser.me/api/portraits/men/33.jpg'
-
+	const imageUser = session?.user.user_metadata.picture
 	useEffect(() => {
 		supabase.auth.getSession().then(({ data: { session } }) => {
 			setSession(session)

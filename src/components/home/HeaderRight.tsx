@@ -1,13 +1,13 @@
 import { Image, StyleSheet, View } from 'react-native'
 import { useScheme } from '../../hooks/colorScheme'
 
-export default function HeaderRight({ uriImage }: { uriImage: string }) {
+export default function HeaderRight({ uriImage }: { uriImage: string | null }) {
 	const scheme = useScheme()
 
 	return (
 		<View style={styles.container}>
 			<Image
-				source={{ uri: uriImage }}
+				source={uriImage ? { uri: uriImage } : require('../../../assets/images/user.png')}
 				style={[styles.Logo, { borderColor: scheme.secondText }]}
 			/>
 		</View>
