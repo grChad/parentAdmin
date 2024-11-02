@@ -1,7 +1,10 @@
 import { View, Text, StyleSheet, Image, Pressable } from 'react-native'
 import { useScheme } from '../../hooks/colorScheme'
 
-export default function Banner() {
+interface Props {
+	handleCreateQuiz: () => void
+}
+export default function Banner({ handleCreateQuiz }: Props) {
 	const scheme = useScheme()
 
 	return (
@@ -18,7 +21,10 @@ export default function Banner() {
 					<Text style={{ color: scheme.primary, fontWeight: 'bold' }}>356</Text>
 				</View>
 			</View>
-			<Pressable style={({ pressed }) => [pressed && { opacity: 0.7 }, styles.boxLeft]}>
+			<Pressable
+				onPress={handleCreateQuiz}
+				style={({ pressed }) => [pressed && { opacity: 0.7 }, styles.boxLeft]}
+			>
 				<Image
 					source={require('../../../assets/images/added.png')}
 					style={styles.addImage}
