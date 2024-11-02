@@ -13,7 +13,6 @@ const Stack = createNativeStackNavigator()
 
 export default function NavigationApp() {
 	const [session, setSession] = useState<Session | null>(null)
-	console.log(session)
 	const imageUser =
 		session?.user.user_metadata.picture ??
 		'https://randomuser.me/api/portraits/men/33.jpg'
