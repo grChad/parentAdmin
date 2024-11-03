@@ -6,7 +6,7 @@ import type { Session } from '@supabase/supabase-js'
 import type { RootStackParamList } from '../types/navigation'
 
 // import components
-import { LoginScreen, HomeScreen, NewQuiz } from '../screens'
+import { LoginScreen, HomeScreen, NewQuizScreen, ModalSearchImages } from '../screens'
 import HeaderRight from '../components/home/HeaderRight'
 import { IconMenu } from '../components/icons'
 
@@ -39,22 +39,29 @@ export default function NavigationApp() {
 				}}
 			>
 				{session ? (
-					<Stack.Group>
-						<Stack.Screen
-							name="Home"
-							component={HomeScreen}
-							options={{
-								headerTitleAlign: 'center',
-								headerLeft: () => <IconMenu size={24} />,
-								headerRight: () => <HeaderRight uriImage={imageUser} />,
-							}}
-						/>
-						<Stack.Screen
-							name="NewQuiz"
-							component={NewQuiz}
-							options={{ title: 'Crear Quiz' }}
-						/>
-					</Stack.Group>
+					<>
+						<Stack.Group>
+							<Stack.Screen
+								name="Home"
+								component={HomeScreen}
+								options={{
+									headerTitleAlign: 'center',
+									headerLeft: () => <IconMenu size={24} />,
+									headerRight: () => <HeaderRight uriImage={imageUser} />,
+								}}
+							/>
+							<Stack.Screen
+								name="NewQuiz"
+								component={NewQuizScreen}
+								options={{ title: 'Crear Quiz' }}
+							/>
+						</Stack.Group>
+						<Stack.Group
+							screenOptions={{ presentation: 'transparentModal', headerShown: false }}
+						>
+							<Stack.Screen name="ModalSearchImages" component={ModalSearchImages} />
+						</Stack.Group>
+					</>
 				) : (
 					<Stack.Screen
 						name="Login"
