@@ -1,3 +1,5 @@
+import type { ImageSourcePropType } from 'react-native'
+
 export enum Courses {
 	chemistry = 'Química',
 	maths = 'Matemáticas',
@@ -5,7 +7,11 @@ export enum Courses {
 	philosophy = 'Filosofía',
 }
 
-const imagesCourses = [
+export type ListCourseProps = {
+	course: string
+	image: ImageSourcePropType
+}
+const imagesCourses: ListCourseProps[] = [
 	{
 		course: Courses.chemistry,
 		image: require('../../assets/images/courses/chemistry.png'),

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { View, FlatList, Button } from 'react-native'
+import { View, FlatList } from 'react-native'
 import { supabase } from '../../service/supabase'
 import { useAppDispatch } from '../../hooks/store'
 import { setDataQuiz } from '../../store/ducks/quizSlices'
-import { QuizNavigationProp } from '../../types/navigation'
+import type { QuizNavigationProp } from '../../types/navigation'
 
 // components
 import CardCourse from './CardCourse'
@@ -19,7 +19,7 @@ export default function HomeScreen({ navigation }: { navigation: QuizNavigationP
 	const [listCourses, setListCourses] = useState<ListCourses[]>([])
 	const dispatch = useAppDispatch()
 
-	const handleCreateQuiz = () => navigation.navigate('NewQuiz')
+	const handleCreateQuiz = () => navigation.navigate('NewQuiz', { imageUrl: '' })
 
 	useEffect(() => {
 		const getDataQuiz = async () => {

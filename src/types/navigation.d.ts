@@ -4,7 +4,7 @@ import type { RouteProp, NavigationProp } from '@react-navigation/native'
 export type RootStackParamList = {
 	Login: undefined
 	Home: undefined
-	NewQuiz: undefined
+	NewQuiz: { imageUrl: string }
 	ModalSearchImages: undefined
 }
 

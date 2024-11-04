@@ -25,7 +25,7 @@ export default function InputSearch({ handlePress }: Props) {
 				onChangeText={setInputValue}
 			/>
 			<Pressable onPress={handlePresable}>
-				<SendICon size={30} fill={inputValue.length > 0 ? '#4DA7E4' : '#bababa'} />
+				<SendICon size={25} fill={inputValue.length > 0 ? '#4DA7E4' : '#bababa'} />
 			</Pressable>
 		</View>
 	)
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 		width: '100%',
 		alignItems: 'center',
 		columnGap: 10,
-		marginBottom: 20,
+		marginBottom: 10,
 	},
 	input: {
 		flex: 1,
