@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react'
-import { View, StyleSheet, Pressable, FlatList, Button } from 'react-native'
+import {
+	View,
+	StyleSheet,
+	Pressable,
+	FlatList,
+	Button,
+	useWindowDimensions,
+} from 'react-native'
 import type { ModalSearchImagesNavigationProp } from '../../types/navigation'
 import Config from 'react-native-config'
 import type { UnsplashImage } from '../../types/unsplash'
@@ -16,6 +23,8 @@ export default function ModalSearchImages({ navigation }: Props) {
 	const [data, setData] = useState<UnsplashImage[]>([])
 	const [selectIdImage, setSelectIdImage] = useState('')
 	const [selectUrlImage, setSelectUrlImage] = useState<string>('')
+
+	const { height } = useWindowDimensions()
 
 	const updateTextSearch = (txt: string) => setTextSearch(txt)
 
@@ -48,7 +57,7 @@ export default function ModalSearchImages({ navigation }: Props) {
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.main}>
+			<View style={[styles.main, { height: height - 80 }]}>
 				<Pressable onPress={() => navigation.goBack()} style={styles.buttonExit}>
 					<IconClose size={20} fill="red" />
 				</Pressable>
@@ -87,22 +96,16 @@ export default function ModalSearchImages({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: '#0004',
-		paddingHorizontal: 25,
-		paddingVertical: '15%',
-	},
+	container: { flex: 1, backgroundColor: '#0004' },
 	main: {
-		width: '100%',
-		height: '100%',
+		position: 'absolute',
+		top: 40,
+		left: 20,
+		right: 20,
 		backgroundColor: 'white',
 		borderRadius: 10,
 		boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 10, color: 'dimgray' }],
 		padding: 20,
-		position: 'absolute',
 	},
 	buttonExit: {
 		position: 'absolute',

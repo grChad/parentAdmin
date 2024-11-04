@@ -1,4 +1,5 @@
-import { Pressable, Image, StyleSheet } from 'react-native'
+import { useState } from 'react'
+import { Pressable, Image, StyleSheet, ActivityIndicator, View } from 'react-native'
 import type { UnsplashImage } from '../../types/unsplash'
 
 interface Props {
@@ -12,15 +13,22 @@ export default function CardImage({
 	selectIdImage,
 	handleSelectImage,
 }: Props) {
+	const [isLoading, setIsLoading] = useState(false)
+
 	return (
-		<Pressable
-			onPress={() => handleSelectImage(dataImage.id)}
-			style={{ position: 'relative' }}
-		>
+		<Pressable onPress={() => handleSelectImage(dataImage.id)} style={styles.container}>
 			<Image
 				source={{ uri: dataImage.urls.thumb }}
 				style={[selectIdImage === dataImage.id && { opacity: 0.4 }, styles.image]}
+				onLoadStart={() => setIsLoading(true)}
+				onLoadEnd={() => setIsLoading(false)}
 			/>
+
+			{isLoading && (
+				<View style={styles.boxIndicator}>
+					<ActivityIndicator size="large" color="#4EA9E7" />
+				</View>
+			)}
 			{selectIdImage === dataImage.id && (
 				<Image
 					source={require('../../../assets/images/check.png')}
@@ -32,10 +40,23 @@ export default function CardImage({
 }
 
 const styles = StyleSheet.create({
-	image: {
-		width: 120,
+	container: {
+		width: 130,
 		aspectRatio: 1.5,
 		borderRadius: 5,
+		position: 'relative',
+		overflow: 'hidden',
+		boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 5, color: '#A2A2A2' }],
+	},
+	image: { width: '100%', height: '100%' },
+	boxIndicator: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 	imageCheck: {
 		width: 30,

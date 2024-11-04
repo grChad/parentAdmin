@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, TextInput, StyleSheet, Pressable } from 'react-native'
+import { View, TextInput, StyleSheet, Pressable, Keyboard } from 'react-native'
 
 // import components
 import { SendICon } from '../../components/icons'
@@ -12,6 +12,7 @@ export default function InputSearch({ handlePress }: Props) {
 
 	const handlePresable = () => {
 		if (inputValue.length > 0) {
+			Keyboard.dismiss() // oculta el teclado
 			handlePress(inputValue)
 		}
 	}
