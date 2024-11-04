@@ -8,12 +8,14 @@ interface QuizState {
 		count: number
 	}[]
 	selectedCourse: string | null
+	updateQuizCounter: number
 }
 
 const initialState: QuizState = {
 	data: [],
 	listCourses: [],
 	selectedCourse: null,
+	updateQuizCounter: 0,
 }
 
 export const quizSlice = createSlice({
@@ -33,12 +35,17 @@ export const quizSlice = createSlice({
 				count,
 			}))
 		},
+
 		setSelectedCourse: (state, action: { payload: string | null }) => {
 			state.selectedCourse = action.payload
+		},
+
+		setUpdateQuizCounter: (state) => {
+			state.updateQuizCounter = state.updateQuizCounter + 1
 		},
 	},
 })
 
-export const { setDataQuiz, setSelectedCourse } = quizSlice.actions
+export const { setDataQuiz, setSelectedCourse, setUpdateQuizCounter } = quizSlice.actions
 
 export default quizSlice.reducer

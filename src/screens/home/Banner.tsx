@@ -12,12 +12,12 @@ export default function Banner({ handleCreateQuiz }: Props) {
 			<View style={styles.boxLeft}>
 				<View style={{ padding: 10 }}>
 					<Image
-						source={require('../../../assets/images/cup.png')}
+						source={require('../../../assets/images/coin.png')}
 						style={styles.imageCup}
 					/>
 				</View>
 				<View>
-					<Text style={[styles.text, { color: scheme.secondText }]}>Ranking</Text>
+					<Text style={[styles.text, { color: scheme.secondText }]}>ThiagoCoins</Text>
 					<Text style={{ color: scheme.primary, fontWeight: 'bold' }}>356</Text>
 				</View>
 			</View>

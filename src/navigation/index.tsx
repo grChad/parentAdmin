@@ -36,6 +36,7 @@ export default function NavigationApp() {
 					statusBarColor: '#fff',
 					statusBarStyle: 'dark',
 					navigationBarColor: '#fff',
+					headerTitleStyle: { fontFamily: 'Asap' },
 				}}
 			>
 				{session ? (

@@ -1,4 +1,4 @@
-import { ImageBackground, Image, Pressable, StyleSheet } from 'react-native'
+import { ImageBackground, Image, Pressable, StyleSheet, Text } from 'react-native'
 
 interface Props {
 	imageUrl: string
@@ -10,8 +10,12 @@ export default function SelectedImage({ imageUrl, navigateToModalSearchImages }:
 			style={styles.container}
 			source={{ uri: imageUrl.length > 0 ? imageUrl : undefined }}
 		>
+			{imageUrl.length === 0 && <Text style={styles.text}>Selecciona una imagen</Text>}
 			<Pressable
-				style={({ pressed }) => [pressed && { opacity: 0.7 }]}
+				style={({ pressed }) => [
+					pressed && { opacity: 0.7 },
+					{ marginBottom: 5, marginRight: 5 },
+				]}
 				onPress={navigateToModalSearchImages}
 			>
 				<Image
@@ -33,5 +37,12 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-end',
 		alignItems: 'flex-end',
 		overflow: 'hidden',
+	},
+	text: {
+		fontFamily: 'ComicNeue',
+		marginBottom: 10,
+		marginRight: 20,
+		fontSize: 18,
+		color: '#383838',
 	},
 })

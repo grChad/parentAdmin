@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Asap.ttf",
+      "sha1": "84db100f469cdf265141f29ae26be5748e8fd00b"
+    },
+    {
+      "path": "assets/fonts/ComicNeue.ttf",
+      "sha1": "50f9418f3d4e3cf0758a9a246754b1d5ca19bb8e"
+    },
+    {
+      "path": "assets/fonts/Lobster.ttf",
+      "sha1": "120c751cd7a77174037c2409ab883ef7efc5edbb"
+    },
+    {
+      "path": "assets/fonts/Roboto.ttf",
+      "sha1": "ce57fc6c6705cb20661ac325fac5d4598b6efbca"
+    }
+  ]
+}

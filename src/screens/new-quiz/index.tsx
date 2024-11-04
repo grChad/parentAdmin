@@ -12,6 +12,10 @@ import {
 import type { QuizRouteProp, QuizNavigationProp } from '../../types/navigation'
 import { createDatabase } from '../../service/methods'
 
+// store Redux
+import { setUpdateQuizCounter } from '../../store/ducks/quizSlices'
+import { useAppDispatch } from '../../hooks/store'
+
 import CourseList from '../../constants/list-courses'
 import CardCourse from './CardCourse'
 import SelectedImage from './SelectedImage'
@@ -22,6 +26,8 @@ interface Props {
 }
 export default function NewQuizScreen({ route, navigation }: Props) {
 	const { imageUrl } = route.params
+	const dispatch = useAppDispatch()
+
 	const [showPanelError, setShowPanelError] = useState(false)
 	const [loadingSendQuiz, setLoadingSendQuiz] = useState(false)
 	const [question, setQuestion] = useState('')
@@ -57,7 +63,8 @@ export default function NewQuizScreen({ route, navigation }: Props) {
 					image: imageUrl === '' ? null : imageUrl,
 				})
 			}
-			setLoadingSendQuiz(true)
+			setLoadingSendQuiz(true) // indicador de carga
+			dispatch(setUpdateQuizCounter()) // para actualizar el contador de quizzes
 			setTimeout(() => {
 				navigation.navigate('Home')
 			}, 2000)
@@ -89,6 +96,25 @@ export default function NewQuizScreen({ route, navigation }: Props) {
 
 	return (
 		<>
+			{showPanelError && (
+				<View
+					style={{
+						backgroundColor: 'red',
+						padding: 10,
+						flexDirection: 'row',
+						flexWrap: 'wrap',
+					}}
+				>
+					<Text style={{ color: 'white', textShadowColor: 'black', textShadowRadius: 3 }}>
+						Rellena:{' '}
+						<Text
+							style={{ color: 'white', textShadowColor: 'black', textShadowRadius: 3 }}
+						>
+							{listItemsError()}
+						</Text>
+					</Text>
+				</View>
+			)}
 			<View style={{ paddingHorizontal: 20, paddingTop: 20, flex: 1, gap: 20 }}>
 				<SelectedImage imageUrl={imageUrl} navigateToModalSearchImages={handleNavigate} />
 
@@ -178,25 +204,6 @@ export default function NewQuizScreen({ route, navigation }: Props) {
 					</View>
 				</ScrollView>
 			</View>
-			{showPanelError && (
-				<View
-					style={{
-						backgroundColor: 'red',
-						padding: 10,
-						flexDirection: 'row',
-						flexWrap: 'wrap',
-					}}
-				>
-					<Text style={{ color: 'white', textShadowColor: 'black', textShadowRadius: 3 }}>
-						Rellena:{' '}
-						<Text
-							style={{ color: 'white', textShadowColor: 'black', textShadowRadius: 3 }}
-						>
-							{listItemsError()}
-						</Text>
-					</Text>
-				</View>
-			)}
 		</>
 	)
 }

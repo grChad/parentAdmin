@@ -5,6 +5,9 @@ import { useAppDispatch } from '../../hooks/store'
 import { setDataQuiz } from '../../store/ducks/quizSlices'
 import type { QuizNavigationProp } from '../../types/navigation'
 
+// store
+import { useAppSelector } from '../../hooks/store'
+
 // components
 import CardCourse from './CardCourse'
 import Banner from './Banner'
@@ -18,7 +21,7 @@ export default function HomeScreen({ navigation }: { navigation: QuizNavigationP
 	// const [updateQuiz, setUpdateQuiz] = useState(0)
 	const [listCourses, setListCourses] = useState<ListCourses[]>([])
 	const dispatch = useAppDispatch()
-
+	const updateQuiz = useAppSelector((state) => state.quiz.updateQuizCounter)
 	const handleCreateQuiz = () => navigation.navigate('NewQuiz', { imageUrl: '' })
 
 	useEffect(() => {
@@ -42,8 +45,7 @@ export default function HomeScreen({ navigation }: { navigation: QuizNavigationP
 			}
 		}
 		getDataQuiz()
-	}, [])
-	// }, [updateQuiz])
+	}, [updateQuiz])
 
 	return (
 		<View style={{ flex: 1 }}>
