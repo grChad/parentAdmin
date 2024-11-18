@@ -55,9 +55,10 @@ export default function HomeScreen({ navigation }: { navigation: QuizNavigationP
 				data={listCourses}
 				keyExtractor={(item) => item.course}
 				renderItem={({ item }) => <CardCourse params={item} />}
-				contentContainerStyle={{ alignItems: 'center', rowGap: 20, paddingTop: 15 }}
+				contentContainerStyle={{ rowGap: 20, paddingVertical: 15 }}
 				numColumns={2}
 				columnWrapperStyle={{ columnGap: 15, justifyContent: 'center' }}
+				showsVerticalScrollIndicator={false}
 			/>
 		</View>
 	)

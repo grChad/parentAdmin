@@ -34,14 +34,16 @@ export default function CardCourse({ params }: Props) {
 		>
 			<Image source={imageSource} style={[styles.image]} />
 			<Text style={{ color: scheme.text, fontWeight: 'bold' }}>{course}</Text>
-			<Text style={{ color: scheme.text }}>{count} preguntas</Text>
+			<Text style={{ color: scheme.secondText, fontFamily: 'ComicNeue' }}>
+				{count} preguntas
+			</Text>
 		</Pressable>
 	)
 }
 
 const styles = StyleSheet.create({
 	container: {
-		width: '45%',
+		width: '40%',
 		backgroundColor: 'white',
 		alignItems: 'center',
 		paddingHorizontal: 15,
@@ -49,10 +51,5 @@ const styles = StyleSheet.create({
 		borderRadius: 5,
 	},
 
-	image: {
-		width: 60,
-		height: 60,
-		marginBottom: 20,
-		transform: [{ translateY: -12 }],
-	},
+	image: { width: 60, height: 60, transform: [{ translateY: -12 }] },
 })
