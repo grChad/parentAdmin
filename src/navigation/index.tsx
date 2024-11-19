@@ -6,7 +6,13 @@ import type { Session } from '@supabase/supabase-js'
 import type { RootStackParamList } from '../types/navigation'
 
 // import components
-import { LoginScreen, HomeScreen, NewQuizScreen, ModalSearchImages } from '../screens'
+import {
+	LoginScreen,
+	HomeScreen,
+	NewQuizScreen,
+	ModalSearchImages,
+	ModalSelectedCourse,
+} from '../screens'
 import HeaderRight from '../components/home/HeaderRight'
 import { IconMenu } from '../components/icons'
 
@@ -61,6 +67,13 @@ export default function NavigationApp() {
 							screenOptions={{ presentation: 'transparentModal', headerShown: false }}
 						>
 							<Stack.Screen name="ModalSearchImages" component={ModalSearchImages} />
+							<Stack.Screen
+								name="ModalSelectedCourse"
+								component={ModalSelectedCourse}
+								options={{
+									animation: 'slide_from_bottom',
+								}}
+							/>
 						</Stack.Group>
 					</>
 				) : (
