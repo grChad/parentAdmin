@@ -21,7 +21,6 @@ export default function CardCourse({ params }: Props) {
 
 	const handlePress = () => {
 		dispatch(setSelectedCourse(course))
-		console.log('ruta')
 	}
 
 	return (
