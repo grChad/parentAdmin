@@ -1,19 +1,14 @@
 import { useState, useEffect } from 'react'
-import {
-	View,
-	StyleSheet,
-	Pressable,
-	FlatList,
-	Button,
-	useWindowDimensions,
-} from 'react-native'
-import type { ModalSearchImagesNavigationProp } from '../../types/navigation'
+import { View, StyleSheet } from 'react-native'
 import Config from 'react-native-config'
+import type { ModalSearchImagesNavigationProp } from '../../types/navigation'
 import type { UnsplashImage } from '../../types/unsplash'
 
-import { IconClose } from '../../components/icons'
+// import components
 import InputSearch from './InputSearch'
-import CardImage from './CardImage'
+import ButtonSelect from './ButtonSelect'
+import ListImages from './ListImages'
+import ButtonExit from './ButtonExit'
 
 interface Props {
 	navigation: ModalSearchImagesNavigationProp
@@ -21,12 +16,10 @@ interface Props {
 export default function ModalSearchImages({ navigation }: Props) {
 	const [textSearch, setTextSearch] = useState('')
 	const [data, setData] = useState<UnsplashImage[]>([])
-	const [selectIdImage, setSelectIdImage] = useState('')
-	const [selectUrlImage, setSelectUrlImage] = useState<string>('')
-
-	const { height } = useWindowDimensions()
 
 	const updateTextSearch = (txt: string) => setTextSearch(txt)
+
+	const handleReturn = () => navigation.goBack()
 
 	const URL = 'https://api.unsplash.com/search/photos'
 	const IMAGES_PER_PAGE = 30
@@ -36,7 +29,7 @@ export default function ModalSearchImages({ navigation }: Props) {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				if (textSearch.length > 0) {
+				if (textSearch) {
 					const response = await fetch(
 						`${URL}?query=${textSearch}&per_page=${IMAGES_PER_PAGE}&orientation=${ORIENTATION}&lang=es&client_id=${UNSPLASH_ACCESS_KEY}`,
 					)
@@ -50,46 +43,16 @@ export default function ModalSearchImages({ navigation }: Props) {
 		fetchData()
 	}, [textSearch])
 
-	const handleSelectImage = (idImage: string) => {
-		setSelectIdImage(idImage)
-		setSelectUrlImage(data.find((ele) => ele.id === idImage)?.urls.regular as string)
-	}
-
 	return (
 		<View style={styles.container}>
-			<View style={[styles.main, { height: height - 80 }]}>
-				<Pressable onPress={() => navigation.goBack()} style={styles.buttonExit}>
-					<IconClose size={20} fill="red" />
-				</Pressable>
+			<View style={styles.main}>
+				<ButtonExit handleReturn={handleReturn} />
 
 				<InputSearch handlePress={updateTextSearch} />
 
-				{selectIdImage.length > 0 && (
-					<Button
-						title="Seleccionar Imagen"
-						onPress={() => navigation.navigate('NewQuiz', { imageUrl: selectUrlImage })}
-					/>
-				)}
+				<ButtonSelect handleReturn={handleReturn} />
 
-				<FlatList
-					data={data}
-					keyExtractor={(item) => item.id}
-					renderItem={({ item }) => (
-						<CardImage
-							dataImage={item}
-							selectIdImage={selectIdImage}
-							handleSelectImage={handleSelectImage}
-						/>
-					)}
-					contentContainerStyle={{
-						alignItems: 'center',
-						rowGap: 15,
-						paddingVertical: 15,
-					}}
-					numColumns={2}
-					columnWrapperStyle={{ columnGap: 15, justifyContent: 'center' }}
-					showsVerticalScrollIndicator={false}
-				/>
+				<ListImages data={data} />
 			</View>
 		</View>
 	)
@@ -99,25 +62,13 @@ const styles = StyleSheet.create({
 	container: { flex: 1, backgroundColor: '#0004' },
 	main: {
 		position: 'absolute',
-		top: 40,
 		left: 20,
 		right: 20,
+		top: 50,
+		bottom: 50,
 		backgroundColor: 'white',
 		borderRadius: 10,
 		boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 10, color: 'dimgray' }],
 		padding: 20,
-	},
-	buttonExit: {
-		position: 'absolute',
-		top: -15,
-		right: -15,
-		width: 30,
-		height: 30,
-		borderRadius: 20,
-		backgroundColor: 'white',
-		borderWidth: 2,
-		borderColor: 'red',
-		justifyContent: 'center',
-		alignItems: 'center',
 	},
 })

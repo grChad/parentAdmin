@@ -8,25 +8,31 @@ interface Props {
 	handlePress: (text: string) => void
 }
 export default function InputSearch({ handlePress }: Props) {
+	const [isFocus, setIsFocus] = useState(false)
 	const [inputValue, setInputValue] = useState('')
 
 	const handlePresable = () => {
-		if (inputValue.length > 0) {
-			Keyboard.dismiss() // oculta el teclado
-			handlePress(inputValue)
-		}
+		Keyboard.dismiss() // oculta el teclado
+
+		handlePress(inputValue)
 	}
 
 	return (
 		<View style={styles.container}>
 			<TextInput
 				placeholder="Buscar imagen"
-				style={styles.input}
+				style={[styles.input, isFocus && { borderColor: '#4DA7E4' }]}
 				value={inputValue}
 				onChangeText={setInputValue}
+				onFocus={() => setIsFocus(true)}
 			/>
-			<Pressable onPress={handlePresable}>
-				<SendICon size={25} fill={inputValue.length > 0 ? '#4DA7E4' : '#bababa'} />
+
+			<Pressable
+				onPress={handlePresable}
+				disabled={inputValue.length === 0}
+				style={({ pressed }) => [pressed && { opacity: 0.7 }, styles.buttonPress]}
+			>
+				<SendICon size={25} fill={inputValue ? '#4DA7E4' : '#bababa'} />
 			</Pressable>
 		</View>
 	)
@@ -46,5 +52,11 @@ const styles = StyleSheet.create({
 		borderColor: '#cacaca',
 		borderRadius: 50,
 		paddingHorizontal: 15,
+	},
+	buttonPress: {
+		width: 30,
+		height: 30,
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 })
