@@ -17,6 +17,7 @@ export enum DarkColor {
 	sky = '#88cbff',
 	gold = '#C99C19',
 	grey = '#747474',
+	error = '#E78284',
 }
 
 export enum LightColor {
@@ -28,4 +29,5 @@ export enum LightColor {
 	sky = '#4F81A7',
 	gold = '#E6B31E',
 	grey = '#848484',
+	error = '#FF5353',
 }

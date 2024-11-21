@@ -60,7 +60,7 @@ export default function NavigationApp() {
 							<Stack.Screen
 								name="NewQuiz"
 								component={NewQuizScreen}
-								options={{ title: 'Crear Quiz' }}
+								options={{ title: 'Crear Quiz', headerTitleAlign: 'center' }}
 							/>
 						</Stack.Group>
 						<Stack.Group

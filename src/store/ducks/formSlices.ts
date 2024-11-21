@@ -8,6 +8,8 @@ const initialState: FormState = {
 	formIncorrectAnswer2: '',
 	formIncorrectAnswer3: '',
 	formIncorrectAnswer4: '',
+
+	formInvalid: false,
 }
 
 export const formSlice = createSlice({
@@ -35,6 +37,10 @@ export const formSlice = createSlice({
 			if (action.payload.order === 'fourth')
 				state.formIncorrectAnswer4 = action.payload.replace
 		},
+		setFormInvalid: (state, action: { payload: 'invalid' | 'valid' }) => {
+			if (action.payload === 'invalid') state.formInvalid = true
+			if (action.payload === 'valid') state.formInvalid = false
+		},
 		setFormReset: (state) => {
 			state.formQuestion = ''
 			state.formCorrectAnswer = ''
@@ -42,6 +48,7 @@ export const formSlice = createSlice({
 			state.formIncorrectAnswer2 = ''
 			state.formIncorrectAnswer3 = ''
 			state.formIncorrectAnswer4 = ''
+			state.formInvalid = false
 		},
 	},
 })
@@ -50,6 +57,7 @@ export const {
 	setFormQuestion,
 	setFormCorrectAnswer,
 	setFormIncorrectAnswer,
+	setFormInvalid,
 	setFormReset,
 } = formSlice.actions
 

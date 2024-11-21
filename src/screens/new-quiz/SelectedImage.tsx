@@ -1,39 +1,46 @@
-import { ImageBackground, Image, Pressable, StyleSheet, Text } from 'react-native'
+import { ImageBackground, Image, Pressable, StyleSheet, Text, View } from 'react-native'
+
+// state Redux
+import { useAppSelector } from '../../hooks/store'
 
 interface Props {
-	imageUrl: string
-	navigateToModalSearchImages: () => void
+	handleNavigate: () => void
 }
-export default function SelectedImage({ imageUrl, navigateToModalSearchImages }: Props) {
+export default function SelectedImage({ handleNavigate }: Props) {
+	const modalImageDB = useAppSelector((state) => state.modal.modalImageDB)
+
 	return (
-		<ImageBackground
-			style={styles.container}
-			source={{ uri: imageUrl.length > 0 ? imageUrl : undefined }}
-		>
-			{imageUrl.length === 0 && <Text style={styles.text}>Selecciona una imagen</Text>}
-			<Pressable
-				style={({ pressed }) => [
-					pressed && { opacity: 0.7 },
-					{ marginBottom: 5, marginRight: 5 },
-				]}
-				onPress={navigateToModalSearchImages}
+		<View style={styles.container}>
+			<ImageBackground
+				style={styles.imageBg}
+				source={{ uri: modalImageDB ? modalImageDB : undefined }}
 			>
-				<Image
-					source={require('../../../assets/images/add-image.png')}
-					style={{ width: 40, height: 40 }}
-				/>
-			</Pressable>
-		</ImageBackground>
+				{!modalImageDB && <Text style={styles.text}>Selecciona una imagen</Text>}
+				<Pressable
+					style={({ pressed }) => [
+						pressed && { opacity: 0.7 },
+						{ marginBottom: 5, marginRight: 5 },
+					]}
+					onPress={handleNavigate}
+				>
+					<Image
+						source={require('../../../assets/images/add-image.png')}
+						style={{ width: 40, height: 40 }}
+					/>
+				</Pressable>
+			</ImageBackground>
+		</View>
 	)
 }
 
 const styles = StyleSheet.create({
-	container: {
+	container: { alignItems: 'center', marginVertical: 20 },
+	imageBg: {
 		width: '100%',
 		aspectRatio: 2,
 		backgroundColor: '#D6D6D6',
 		borderRadius: 10,
-		boxShadow: '0px 0px 3px gray',
+		boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 3, color: 'gray' }],
 		justifyContent: 'flex-end',
 		alignItems: 'flex-end',
 		overflow: 'hidden',

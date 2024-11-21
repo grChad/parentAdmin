@@ -5,4 +5,5 @@ export interface FormState {
 	formIncorrectAnswer2: string
 	formIncorrectAnswer3: string
 	formIncorrectAnswer4: string
+	formInvalid: boolean
 }

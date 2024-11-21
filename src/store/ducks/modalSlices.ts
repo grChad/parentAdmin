@@ -16,9 +16,6 @@ const initialState: QuizState = {
 	modalImageDB: '',
 }
 
-// TODO: En el futuro, Ver si es posible crear una function 'set' que resetea todo
-// y si es conveniente de usarlo, para que sea mas limbio.
-
 export const modalSlice = createSlice({
 	name: 'modal',
 	initialState,
@@ -30,10 +27,9 @@ export const modalSlice = createSlice({
 			if (action.payload === 'reset') {
 				state.modalCourse = ''
 				state.modalCourseDB = ''
-			} else if (action.payload === 'accepted') {
+			}
+			if (action.payload === 'accepted') {
 				state.modalCourseDB = state.modalCourse
-			} else {
-				throw new Error('Modal Course Select: invalid payload')
 			}
 		},
 
@@ -44,16 +40,26 @@ export const modalSlice = createSlice({
 			if (action.payload === 'accepted') {
 				state.modalImageDB = state.modalImage
 				state.modalImage = ''
-			} else if (action.payload === 'reset') {
-				state.modalImageDB = ''
-			} else {
-				throw new Error('Modal Image Select: invalid payload')
 			}
+			if (action.payload === 'reset') {
+				state.modalImageDB = ''
+			}
+		},
+		setModalReset: (state) => {
+			state.modalCourse = ''
+			state.modalCourseDB = ''
+			state.modalImage = ''
+			state.modalImageDB = ''
 		},
 	},
 })
 
-export const { setModalCourse, setModalCourseDB, setModalImage, setModalImageDB } =
-	modalSlice.actions
+export const {
+	setModalCourse,
+	setModalCourseDB,
+	setModalImage,
+	setModalImageDB,
+	setModalReset,
+} = modalSlice.actions
 
 export default modalSlice.reducer
