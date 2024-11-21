@@ -21,7 +21,7 @@ export enum DarkColor {
 }
 
 export enum LightColor {
-	text = '#0F0F0F',
+	text = '#303446',
 	secondText = '#5B5961',
 	background = '#F3F3F3',
 	barBg = '#FFFFFF',
