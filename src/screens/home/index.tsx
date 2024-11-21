@@ -18,12 +18,16 @@ type ListCourses = {
 }
 
 export default function HomeScreen({ navigation }: { navigation: QuizNavigationProp }) {
-	// const [updateQuiz, setUpdateQuiz] = useState(0)
 	const [listCourses, setListCourses] = useState<ListCourses[]>([])
 	const dispatch = useAppDispatch()
 	const updateQuiz = useAppSelector((state) => state.quiz.updateQuizCounter)
-	const handleCreateQuiz = () => navigation.navigate('NewQuiz', { imageUrl: '' })
 
+	const navigateToNewQuiz = () => navigation.navigate('NewQuiz')
+	const navigateToEditQuiz = (course: string) => {
+		navigation.navigate('EditQuiz', { course })
+	}
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies(dispatch): <no es necesario>
 	useEffect(() => {
 		const getDataQuiz = async () => {
 			try {
@@ -49,12 +53,14 @@ export default function HomeScreen({ navigation }: { navigation: QuizNavigationP
 
 	return (
 		<View style={{ flex: 1 }}>
-			<Banner handleCreateQuiz={handleCreateQuiz} />
+			<Banner handleCreateQuiz={navigateToNewQuiz} />
 
 			<FlatList
 				data={listCourses}
 				keyExtractor={(item) => item.course}
-				renderItem={({ item }) => <CardCourse params={item} />}
+				renderItem={({ item }) => (
+					<CardCourse params={item} handleNavigation={navigateToEditQuiz} />
+				)}
 				contentContainerStyle={{ rowGap: 20, paddingVertical: 15 }}
 				numColumns={2}
 				columnWrapperStyle={{ columnGap: 15, justifyContent: 'center' }}

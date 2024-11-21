@@ -10,6 +10,7 @@ import {
 	LoginScreen,
 	HomeScreen,
 	NewQuizScreen,
+	EditQuizScreen,
 	ModalSearchImages,
 	ModalSelectedCourse,
 } from '../screens'
@@ -43,6 +44,7 @@ export default function NavigationApp() {
 					statusBarStyle: 'dark',
 					navigationBarColor: '#fff',
 					headerTitleStyle: { fontFamily: 'Asap' },
+					headerTitleAlign: 'center',
 				}}
 			>
 				{session ? (
@@ -52,7 +54,6 @@ export default function NavigationApp() {
 								name="Home"
 								component={HomeScreen}
 								options={{
-									headerTitleAlign: 'center',
 									headerLeft: () => <IconMenu size={24} />,
 									headerRight: () => <HeaderRight uriImage={imageUser} />,
 								}}
@@ -60,7 +61,12 @@ export default function NavigationApp() {
 							<Stack.Screen
 								name="NewQuiz"
 								component={NewQuizScreen}
-								options={{ title: 'Crear Quiz', headerTitleAlign: 'center' }}
+								options={{ title: 'Crear Quiz' }}
+							/>
+							<Stack.Screen
+								name="EditQuiz"
+								component={EditQuizScreen}
+								options={{ title: 'Editar, Eliminar Quiz' }}
 							/>
 						</Stack.Group>
 						<Stack.Group
