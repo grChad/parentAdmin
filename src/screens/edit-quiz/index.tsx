@@ -21,7 +21,9 @@ export default function EditQuizScreen({ route }: Props) {
 	const dataQuiz = useAppSelector((state) => state.quiz.data)
 	const dispatch = useAppDispatch()
 
-	let dataCourse = dataQuiz.filter((item) => item.course === course)
+	const disabled = selectId.length === 0
+	console.log(disabled)
+	const dataCourse = dataQuiz?.filter((item) => item.course === course)
 
 	const onPressDelete = () => {
 		Alert.alert('¿Estás seguro?', 'Eliminar el Quiz', [
@@ -44,36 +46,37 @@ export default function EditQuizScreen({ route }: Props) {
 		<View style={{ flex: 1 }}>
 			<View
 				style={{
+					height: 60,
 					margin: 10,
 					padding: 5,
 					borderRadius: 10,
-					backgroundColor: '#F67A6333',
-					boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 5, color: 'grey' }],
+					backgroundColor: scheme.primary.concat('55'),
 					flexDirection: 'row',
 					borderWidth: 1,
+					borderColor: scheme.secondText,
 					justifyContent: 'space-evenly',
 				}}
 			>
-				{selectId && (
-					<Pressable
-						onPress={onPressDelete}
-						style={{
-							flexDirection: 'row',
-							columnGap: 5,
-							alignItems: 'center',
-							borderWidth: 1,
-							backgroundColor: '#77DDF0',
-							paddingHorizontal: 5,
-							borderRadius: 5,
-						}}
-					>
-						<View>
-							<Text style={{ fontFamily: 'ComicNeue' }}>Delete</Text>
-							<Text style={{ fontFamily: 'ComicNeue' }}>Item</Text>
-						</View>
-						<IconTrash size={25} fill="#ED6157" />
-					</Pressable>
-				)}
+				<Pressable
+					disabled={disabled}
+					onPress={onPressDelete}
+					style={{
+						flexDirection: 'row',
+						columnGap: 5,
+						alignItems: 'center',
+						borderWidth: 1,
+						backgroundColor: '#77DDF0',
+						paddingHorizontal: 5,
+						borderRadius: 5,
+						opacity: disabled ? 0.4 : 1,
+					}}
+				>
+					<View>
+						<Text style={{ fontFamily: 'ComicNeue' }}>Delete</Text>
+						<Text style={{ fontFamily: 'ComicNeue' }}>Item</Text>
+					</View>
+					<IconTrash size={25} fill="#ED6157" />
+				</Pressable>
 			</View>
 			<FlatList
 				data={dataCourse}
@@ -88,7 +91,7 @@ export default function EditQuizScreen({ route }: Props) {
 							{
 								margin: 10,
 								padding: 5,
-								backgroundColor: 'white',
+								backgroundColor: scheme.light,
 								boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 3, color: 'gray' }],
 								borderRadius: 8,
 								overflow: 'hidden',
@@ -121,7 +124,7 @@ export default function EditQuizScreen({ route }: Props) {
 							<Text
 								numberOfLines={2}
 								lineBreakMode="tail"
-								style={[styles.question, { color: scheme.text }]}
+								style={[styles.question, { color: '#383838' }]}
 							>
 								{item.question}
 							</Text>
@@ -153,7 +156,6 @@ const styles = StyleSheet.create({
 	question: {
 		fontFamily: 'Asap',
 		fontSize: 16,
-		color: '#414559',
 		flex: 1,
 		marginHorizontal: 15,
 		textAlign: 'center',
@@ -170,7 +172,7 @@ const styles = StyleSheet.create({
 		fontFamily: 'ComicNeue',
 		paddingVertical: 2,
 		paddingHorizontal: 5,
-		backgroundColor: '#CDD3F0',
+		backgroundColor: '#B7C4FA',
 		color: '#4D4D4D',
 		borderRadius: 5,
 	},

@@ -20,15 +20,17 @@ export default function CardCourse({ params, handleNavigation }: Props) {
 		<Pressable
 			style={({ pressed }) => [
 				styles.container,
-				{ elevation: pressed ? 2 : 10, opacity: pressed ? 0.7 : 1 },
+				!scheme.isDark && styles.shadow,
+				{
+					opacity: pressed ? 0.7 : 1,
+					backgroundColor: scheme.light,
+				},
 			]}
 			onPress={() => handleNavigation(course)}
 		>
 			<Image source={imageSource} style={[styles.image]} />
-			<Text style={{ color: scheme.text, fontWeight: 'bold' }}>{course}</Text>
-			<Text style={{ color: scheme.secondText, fontFamily: 'ComicNeue' }}>
-				{count} preguntas
-			</Text>
+			<Text style={{ color: '#282828', fontWeight: 'bold' }}>{course}</Text>
+			<Text style={{ color: '#686868', fontFamily: 'ComicNeue' }}>{count} preguntas</Text>
 		</Pressable>
 	)
 }
@@ -36,11 +38,13 @@ export default function CardCourse({ params, handleNavigation }: Props) {
 const styles = StyleSheet.create({
 	container: {
 		width: '40%',
-		backgroundColor: 'white',
 		alignItems: 'center',
 		paddingHorizontal: 15,
 		paddingBottom: 20,
 		borderRadius: 5,
+	},
+	shadow: {
+		boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 5, color: 'silver' }],
 	},
 	image: { width: 60, height: 60, transform: [{ translateY: -12 }] },
 })

@@ -23,9 +23,9 @@ export default function StackNavigation({ session }: { session: Session | null }
 	return (
 		<Stack.Navigator
 			screenOptions={{
-				statusBarBackgroundColor: '#fff',
-				statusBarStyle: 'dark',
-				navigationBarColor: '#fff',
+				statusBarBackgroundColor: scheme.card,
+				statusBarStyle: scheme.isDark ? 'light' : 'dark',
+				navigationBarColor: scheme.card,
 				headerTitleStyle: { fontFamily: 'Asap' },
 				headerTitleAlign: 'center',
 			}}
@@ -37,7 +37,7 @@ export default function StackNavigation({ session }: { session: Session | null }
 							name="Home"
 							component={HomeScreen}
 							options={{
-								headerLeft: () => <IconMenu size={24} />,
+								headerLeft: () => <IconMenu size={24} fill={scheme.text} />,
 								headerRight: () => <HeaderRight uriImage={userLogo} />,
 							}}
 						/>
@@ -55,7 +55,15 @@ export default function StackNavigation({ session }: { session: Session | null }
 					<Stack.Group
 						screenOptions={{ presentation: 'transparentModal', headerShown: false }}
 					>
-						<Stack.Screen name="ModalSearchImages" component={ModalSearchImages} />
+						<Stack.Screen
+							name="ModalSearchImages"
+							component={ModalSearchImages}
+							options={{
+								statusBarBackgroundColor: 'trasparent',
+								statusBarStyle: 'light',
+								navigationBarColor: 'transparent',
+							}}
+						/>
 						<Stack.Screen
 							name="ModalSelectedCourse"
 							component={ModalSelectedCourse}

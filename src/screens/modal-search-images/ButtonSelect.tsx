@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text } from 'react-native'
+import { useScheme } from '../../hooks/colorScheme'
 
 // state Redux
 import { setModalImageDB } from '../../store/ducks/modalSlices'
@@ -10,6 +11,7 @@ interface Props {
 export default function ButtonSelect({ handleReturn }: Props) {
 	const modalImage = useAppSelector((state) => state.modal.modalImage)
 	const dispatch = useAppDispatch()
+	const scheme = useScheme()
 
 	const handlePress = () => {
 		dispatch(setModalImageDB('accepted'))
@@ -24,13 +26,13 @@ export default function ButtonSelect({ handleReturn }: Props) {
 				pressed && { opacity: 0.7 },
 				styles.containerPress,
 				{
-					backgroundColor: isDisabled ? '#30A6F655' : '#30A6F6',
+					backgroundColor: isDisabled ? scheme.primary.concat('33') : scheme.primary,
 				},
 			]}
 			onPress={handlePress}
 			disabled={isDisabled}
 		>
-			<Text style={[styles.text, { color: isDisabled ? '#C3C3C3' : 'white' }]}>
+			<Text style={[styles.text, { color: isDisabled ? scheme.secondText : 'white' }]}>
 				Seleccionar Imagen
 			</Text>
 		</Pressable>
@@ -45,12 +47,5 @@ const styles = StyleSheet.create({
 		marginHorizontal: 'auto',
 		borderRadius: 5,
 	},
-	text: {
-		fontWeight: 'bold',
-		color: 'white',
-		textAlign: 'center',
-		fontSize: 16,
-		textShadowColor: '#686868',
-		textShadowRadius: 2,
-	},
+	text: { fontWeight: 'bold', textAlign: 'center', fontSize: 16 },
 })

@@ -3,6 +3,7 @@ import Svg, { Path } from 'react-native-svg'
 interface IconProps {
 	size: number
 	fill?: string
+	stroke?: string
 }
 
 export const IconMenu = ({ size, fill = '#000' }: IconProps) => {
@@ -27,13 +28,13 @@ export const IconClose = ({ size, fill = '#000' }: IconProps) => {
 	)
 }
 
-export const SendICon = ({ size, fill = '#000' }: IconProps) => {
+export const SendICon = ({ size, fill = '#000', stroke }: IconProps) => {
 	return (
 		<Svg width={size} height={size} viewBox="0 0 512 512">
 			<Path
 				d="M57.6 35.8C23.1 20.6-11.3 57.4 6.1 90.9l63 121.2c4.4 8.4 12.6 14.1 22 15.3c0 0 0 0 0 0L266 249.3c3.4 .4 6 3.3 6 6.7s-2.6 6.3-6 6.7L91.1 284.6s0 0 0 0c-9.4 1.2-17.6 6.9-22 15.3L6.1 421.1c-17.4 33.5 17 70.2 51.6 55.1L492.9 285.3c25.5-11.2 25.5-47.4 0-58.6L57.6 35.8z"
 				strokeWidth={8}
-				stroke="black"
+				stroke={stroke}
 				fill={fill}
 			/>
 		</Svg>

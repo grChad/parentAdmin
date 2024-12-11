@@ -8,7 +8,13 @@ export default function Banner({ handleCreateQuiz }: Props) {
 	const scheme = useScheme()
 
 	return (
-		<View style={styles.container}>
+		<View
+			style={[
+				styles.container,
+				{ backgroundColor: scheme.light },
+				!scheme.isDark && styles.shadow,
+			]}
+		>
 			<View style={styles.boxLeft}>
 				<View style={{ padding: 10 }}>
 					<Image
@@ -17,7 +23,7 @@ export default function Banner({ handleCreateQuiz }: Props) {
 					/>
 				</View>
 				<View>
-					<Text style={[styles.text, { color: scheme.secondText }]}>ThiagoCoins</Text>
+					<Text style={[styles.text, { color: '#282828' }]}>ThiagoCoins</Text>
 					<Text style={{ color: scheme.primary, fontWeight: 'bold' }}>356</Text>
 				</View>
 			</View>
@@ -40,14 +46,15 @@ export default function Banner({ handleCreateQuiz }: Props) {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: 'white',
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		columnGap: 20,
 		borderRadius: 5,
 		marginHorizontal: 20,
-		boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 5, color: '#A1A1A1' }],
 		marginVertical: 20,
+	},
+	shadow: {
+		boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 5, color: 'silver' }],
 	},
 	boxLeft: { flexDirection: 'row', alignItems: 'center' },
 	imageCup: {
