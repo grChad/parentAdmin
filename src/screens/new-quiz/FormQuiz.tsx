@@ -34,7 +34,7 @@ export default function FormQuiz() {
 						styles.input,
 						{ backgroundColor: '#88CBFF55', height: 45 },
 						formInvalid && formQuestion.length === 0
-							? { borderWidth: 2, borderColor: scheme.error }
+							? { borderWidth: 2, borderColor: scheme.notification }
 							: { borderWidth: 1, borderColor: scheme.secondText },
 					]}
 					placeholderTextColor="#999"
@@ -54,7 +54,7 @@ export default function FormQuiz() {
 						{ backgroundColor: '#9AF7A355', height: 45 },
 
 						formInvalid && formCorrectAnswer.length === 0
-							? { borderWidth: 2, borderColor: scheme.error }
+							? { borderWidth: 2, borderColor: scheme.notification }
 							: { borderWidth: 1, borderColor: scheme.secondText },
 					]}
 					placeholderTextColor="#999"
@@ -74,7 +74,7 @@ export default function FormQuiz() {
 						styles.input,
 						{ backgroundColor: '#FFFA', height: 45 },
 						formInvalid && formIncorrectAnswer1.length === 0
-							? { borderWidth: 2, borderColor: scheme.error }
+							? { borderWidth: 2, borderColor: scheme.notification }
 							: { borderWidth: 2, borderColor: 'transparent' },
 					]}
 					placeholderTextColor="#999"
@@ -89,7 +89,7 @@ export default function FormQuiz() {
 						styles.input,
 						{ backgroundColor: '#FFFA', height: 45 },
 						formInvalid && formIncorrectAnswer2.length === 0
-							? { borderWidth: 2, borderColor: scheme.error }
+							? { borderWidth: 2, borderColor: scheme.notification }
 							: { borderWidth: 2, borderColor: 'transparent' },
 					]}
 					placeholderTextColor="#999"

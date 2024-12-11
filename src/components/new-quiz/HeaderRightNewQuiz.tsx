@@ -1,19 +1,18 @@
 import { useState } from 'react'
-import { Text, View, Pressable, ActivityIndicator, StyleSheet } from 'react-native'
+import { Text, Pressable, ActivityIndicator, StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+
+// utils
 import { createDatabase } from '../../service/methods'
+import { useScheme } from '../../hooks/colorScheme'
 
 // store Redux
 import { setUpdateQuizCounter } from '../../store/ducks/quizSlices'
 import { setFormInvalid } from '../../store/ducks/formSlices'
-import { useAppDispatch, useAppSelector } from '../../hooks/store'
+import { useAppSelector, useAppDispatch } from '../../hooks/store'
 
-interface Props {
-	handleNavigate: () => void
-}
-export default function ButtonSend({ handleNavigate }: Props) {
+export default function HeaderRightNewQuiz() {
 	const [loadingSendQuiz, setLoadingSendQuiz] = useState(false)
-
-	const { modalImageDB, modalCourseDB } = useAppSelector((state) => state.modal)
 	const {
 		formQuestion,
 		formCorrectAnswer,
@@ -21,9 +20,12 @@ export default function ButtonSend({ handleNavigate }: Props) {
 		formIncorrectAnswer2,
 		formIncorrectAnswer3,
 		formIncorrectAnswer4,
-		formInvalid,
 	} = useAppSelector((state) => state.form)
+	const { modalCourseDB, modalImageDB } = useAppSelector((state) => state.modal)
+
+	const scheme = useScheme()
 	const dispatch = useAppDispatch()
+	const navigation = useNavigation()
 
 	const isFormValid =
 		modalCourseDB.length > 0 &&
@@ -32,11 +34,7 @@ export default function ButtonSend({ handleNavigate }: Props) {
 		formIncorrectAnswer1.length > 0 &&
 		formIncorrectAnswer2.length > 0
 
-	// false === false || true === true, para mostrar el Button
-	const buttonActive = formInvalid === isFormValid
-
 	const handleSendQuiz = () => {
-		console.log('Presionar send')
 		if (!isFormValid) {
 			dispatch(setFormInvalid('invalid'))
 		} else {
@@ -55,54 +53,45 @@ export default function ButtonSend({ handleNavigate }: Props) {
 
 			setLoadingSendQuiz(true) // indicador de carga
 			dispatch(setUpdateQuizCounter()) // para actualizar el contador de quizzes
-			setTimeout(() => handleNavigate(), 2000)
+			setTimeout(() => navigation.goBack(), 2000) // Regresar a la pantalla de inicio
 		}
 	}
 
-	return (
-		<View style={{ alignItems: 'center' }}>
+	if (isFormValid) {
+		return (
 			<Pressable
-				onPress={handleSendQuiz}
+				// FIXME: haspa que estea disponible 'onPress()'
+				onPressOut={handleSendQuiz}
+				disabled={loadingSendQuiz}
 				style={({ pressed }) => [
-					pressed && { opacity: 0.7 },
-					styles.buttonSend,
-					{
-						backgroundColor: buttonActive ? '#4EA8E6' : '#4EA8E644',
-						borderColor: buttonActive ? '#2A7FB8' : '#2A7FB855',
-					},
+					{ opacity: pressed ? 0.7 : 1, backgroundColor: scheme.primary },
+					styles.containerPress,
 				]}
-				// buttonActive -> false === false || true === true -> true
-				disabled={!buttonActive}
 			>
 				{loadingSendQuiz ? (
-					<ActivityIndicator size="large" color="white" />
+					<ActivityIndicator size="small" color={scheme.popup} />
 				) : (
-					<Text style={[styles.text, { color: buttonActive ? 'white' : 'silver' }]}>
-						Guardar Quiz
-					</Text>
+					<Text style={[{ color: 'white' }, styles.text]}>Crear</Text>
 				)}
 			</Pressable>
-		</View>
-	)
+		)
+	}
+	return <></>
 }
 
 const styles = StyleSheet.create({
-	buttonSend: {
-		marginVertical: 20,
-		paddingVertical: 5,
-		paddingHorizontal: 20,
-		width: 200,
-		height: 40,
-		alignItems: 'center',
+	containerPress: {
+		minWidth: 80,
+		height: 30,
+		borderRadius: 5,
+		paddingVertical: 3,
+		paddingHorizontal: 15,
 		justifyContent: 'center',
-		borderRadius: 30,
-		borderWidth: 1,
+		alignItems: 'center',
 	},
 	text: {
 		fontWeight: 'bold',
-		fontSize: 18,
-		textShadowColor: '#686868',
+		textShadowColor: 'black',
 		textShadowRadius: 1,
-		marginHorizontal: 1,
 	},
 })

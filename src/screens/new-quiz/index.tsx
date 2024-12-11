@@ -11,7 +11,7 @@ import { useAppDispatch } from '../../hooks/store'
 import SelectedImage from './SelectedImage'
 import SelectedCourse from './SelectedCourse'
 import FormQuiz from './FormQuiz'
-import ButtonSend from './ButtonSend'
+import HeaderRightNewQuiz from '../../components/new-quiz/HeaderRightNewQuiz'
 
 interface Props {
 	navigation: QuizNavigationProp
@@ -23,14 +23,17 @@ export default function NewQuizScreen({ navigation }: Props) {
 
 	const dispatch = useAppDispatch()
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies(dispatch): <dispatch no cambia>
+	// biome-ignore lint/correctness/useExhaustiveDependencies(dispatch): no necessary dispatch dependencie
 	useEffect(() => {
+		navigation.setOptions({
+			headerRight: () => <HeaderRightNewQuiz />,
+		})
 		return () => {
 			// NOTE: Desmontal Screen `NewQuizScreen`
 			dispatch(setModalReset())
 			dispatch(setFormReset())
 		}
-	}, [])
+	}, [navigation])
 
 	return (
 		<ScrollView showsVerticalScrollIndicator={false} style={{ paddingHorizontal: 20 }}>
@@ -39,8 +42,6 @@ export default function NewQuizScreen({ navigation }: Props) {
 			<SelectedCourse handleNavigate={navigateToModalCourse} />
 
 			<FormQuiz />
-
-			<ButtonSend handleNavigate={navigateReturn} />
 		</ScrollView>
 	)
 }

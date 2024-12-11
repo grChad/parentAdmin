@@ -22,7 +22,7 @@ export default function SelectedCourse({ handleNavigate }: Props) {
 					styles.buttonPress,
 					pressed && { opacity: 0.5 },
 					formInvalid && modalCourseDB.length === 0
-						? { borderWidth: 2, borderColor: scheme.error }
+						? { borderWidth: 2, borderColor: scheme.notification }
 						: { borderWidth: 2, borderColor: 'transparent' },
 				]}
 				onPress={handleNavigate}
