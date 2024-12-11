@@ -32,7 +32,7 @@ export default function FormQuiz() {
 					onChangeText={(text) => dispatch(setFormQuestion(text))}
 					style={[
 						styles.input,
-						{ backgroundColor: '#88CBFF55', height: 45 },
+						{ backgroundColor: '#88CBFF55', minHeight: 45 },
 						formInvalid && formQuestion.length === 0
 							? { borderWidth: 2, borderColor: scheme.notification }
 							: { borderWidth: 1, borderColor: scheme.secondText },
