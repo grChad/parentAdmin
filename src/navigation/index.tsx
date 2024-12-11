@@ -5,6 +5,9 @@ import { supabase } from '../service/supabase'
 import type { Session } from '@supabase/supabase-js'
 import type { RootStackParamList } from '../types/navigation'
 
+// theme
+import { useThemeNavigation } from '../hooks/colorScheme'
+
 // import components
 import {
 	LoginScreen,
@@ -22,6 +25,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>()
 export default function NavigationApp() {
 	const [session, setSession] = useState<Session | null>(null)
 	const imageUser = session?.user.user_metadata.picture
+	const themeNavigation = useThemeNavigation()
+
 	useEffect(() => {
 		supabase.auth.getSession().then(({ data: { session } }) => {
 			setSession(session)
@@ -37,10 +42,10 @@ export default function NavigationApp() {
 	}, [])
 
 	return (
-		<NavigationContainer>
+		<NavigationContainer theme={themeNavigation}>
 			<Stack.Navigator
 				screenOptions={{
-					statusBarColor: '#fff',
+					statusBarBackgroundColor: '#fff',
 					statusBarStyle: 'dark',
 					navigationBarColor: '#fff',
 					headerTitleStyle: { fontFamily: 'Asap' },
@@ -89,7 +94,7 @@ export default function NavigationApp() {
 						options={{
 							headerShown: false,
 							statusBarTranslucent: true,
-							statusBarColor: 'transparent',
+							statusBarBackgroundColor: 'transparent',
 							statusBarStyle: 'light',
 							navigationBarHidden: true,
 						}}
