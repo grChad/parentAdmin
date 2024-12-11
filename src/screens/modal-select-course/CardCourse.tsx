@@ -1,5 +1,6 @@
 import { Pressable, Image, View, Text, StyleSheet } from 'react-native'
 import type { ListCourseProps } from '../../constants/list-courses'
+import { useScheme } from '../../hooks/colorScheme'
 
 // state Redux
 import { setModalCourse } from '../../store/ducks/modalSlices'
@@ -11,6 +12,7 @@ interface Props {
 export default function CardCourse({ data }: Props) {
 	const { modalCourse } = useAppSelector((state) => state.modal)
 	const dispatch = useAppDispatch()
+	const scheme = useScheme()
 
 	const hasCourse = modalCourse === data.course
 
@@ -19,11 +21,15 @@ export default function CardCourse({ data }: Props) {
 	return (
 		<View style={{ position: 'relative' }}>
 			<Pressable
-				onPress={handlePress}
-				style={({ pressed }) => [
-					pressed && { opacity: 0.5 },
-					hasCourse && { backgroundColor: '#88CBFF', opacity: 0.5 },
+				onPressIn={handlePress}
+				style={[
 					styles.containerPress,
+					{ backgroundColor: scheme.light, borderColor: scheme.pressPopup },
+					hasCourse && {
+						backgroundColor: scheme.primary.concat('22'),
+						// opacity: 0.5,
+						borderColor: scheme.primary,
+					},
 				]}
 			>
 				<View style={{ width: 40, height: 40 }}>
@@ -50,9 +56,9 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		paddingVertical: 3,
 		paddingHorizontal: 10,
-		boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 3, color: 'gray' }],
 		borderRadius: 10,
 		position: 'relative',
+		borderWidth: 1,
 	},
 	boxCheck: {
 		position: 'absolute',

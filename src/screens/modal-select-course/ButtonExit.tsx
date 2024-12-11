@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet } from 'react-native'
+import { useScheme } from '../../hooks/colorScheme'
 
 // state Redux
 import { setModalCourse } from '../../store/ducks/modalSlices'
@@ -13,6 +14,7 @@ interface Props {
 export default function ButtonExit({ handleReturn }: Props) {
 	const { modalCourseDB } = useAppSelector((state) => state.modal)
 	const dispatch = useAppDispatch()
+	const scheme = useScheme()
 
 	const handlePress = () => {
 		handleReturn()
@@ -28,7 +30,7 @@ export default function ButtonExit({ handleReturn }: Props) {
 			style={styles.containerPres}
 			android_ripple={{ radius: 20 }}
 		>
-			<IconClose size={20} fill="gray" />
+			<IconClose size={20} fill={scheme.primary} />
 		</Pressable>
 	)
 }

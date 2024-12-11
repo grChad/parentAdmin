@@ -1,30 +1,16 @@
 import { useState, useEffect } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { supabase } from '../service/supabase'
 import type { Session } from '@supabase/supabase-js'
-import type { RootStackParamList } from '../types/navigation'
 
 // theme
 import { useThemeNavigation } from '../hooks/colorScheme'
 
-// import components
-import {
-	LoginScreen,
-	HomeScreen,
-	NewQuizScreen,
-	EditQuizScreen,
-	ModalSearchImages,
-	ModalSelectedCourse,
-} from '../screens'
-import HeaderRight from '../components/home/HeaderRight'
-import { IconMenu } from '../components/icons'
-
-const Stack = createNativeStackNavigator<RootStackParamList>()
+// import component `StackNavigation`
+import StackNavigation from './StackNavigation'
 
 export default function NavigationApp() {
 	const [session, setSession] = useState<Session | null>(null)
-	const imageUser = session?.user.user_metadata.picture
 	const themeNavigation = useThemeNavigation()
 
 	useEffect(() => {
@@ -43,64 +29,7 @@ export default function NavigationApp() {
 
 	return (
 		<NavigationContainer theme={themeNavigation}>
-			<Stack.Navigator
-				screenOptions={{
-					statusBarBackgroundColor: '#fff',
-					statusBarStyle: 'dark',
-					navigationBarColor: '#fff',
-					headerTitleStyle: { fontFamily: 'Asap' },
-					headerTitleAlign: 'center',
-				}}
-			>
-				{session ? (
-					<>
-						<Stack.Group>
-							<Stack.Screen
-								name="Home"
-								component={HomeScreen}
-								options={{
-									headerLeft: () => <IconMenu size={24} />,
-									headerRight: () => <HeaderRight uriImage={imageUser} />,
-								}}
-							/>
-							<Stack.Screen
-								name="NewQuiz"
-								component={NewQuizScreen}
-								options={{ title: 'Crear Quiz' }}
-							/>
-							<Stack.Screen
-								name="EditQuiz"
-								component={EditQuizScreen}
-								options={{ title: 'Editar, Eliminar Quiz' }}
-							/>
-						</Stack.Group>
-						<Stack.Group
-							screenOptions={{ presentation: 'transparentModal', headerShown: false }}
-						>
-							<Stack.Screen name="ModalSearchImages" component={ModalSearchImages} />
-							<Stack.Screen
-								name="ModalSelectedCourse"
-								component={ModalSelectedCourse}
-								options={{
-									animation: 'slide_from_bottom',
-								}}
-							/>
-						</Stack.Group>
-					</>
-				) : (
-					<Stack.Screen
-						name="Login"
-						component={LoginScreen}
-						options={{
-							headerShown: false,
-							statusBarTranslucent: true,
-							statusBarBackgroundColor: 'transparent',
-							statusBarStyle: 'light',
-							navigationBarHidden: true,
-						}}
-					/>
-				)}
-			</Stack.Navigator>
+			<StackNavigation session={session} />
 		</NavigationContainer>
 	)
 }

@@ -1,6 +1,7 @@
 import { View, StyleSheet, FlatList } from 'react-native'
 import CourseList from '../../constants/list-courses'
 import type { ModalSearchImagesNavigationProp } from '../../types/navigation'
+import { useScheme } from '../../hooks/colorScheme'
 
 // import components
 import CardCourse from './CardCourse'
@@ -13,9 +14,10 @@ interface Props {
 
 export default function ModalSelectedCourse({ navigation }: Props) {
 	const handleReturn = () => navigation.goBack()
+	const scheme = useScheme()
 
 	return (
-		<View style={styles.container}>
+		<View style={[styles.container, { backgroundColor: scheme.popup }]}>
 			<ButtonExit handleReturn={handleReturn} />
 
 			<ButtonSelect handleReturn={handleReturn} />
@@ -41,12 +43,11 @@ const styles = StyleSheet.create({
 		bottom: 0,
 		zIndex: 20,
 		maxHeight: 350,
-		backgroundColor: 'white',
 		paddingTop: 15,
 		paddingHorizontal: 15,
 		borderTopLeftRadius: 15,
 		borderTopRightRadius: 15,
-		boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 10, color: 'dimgray' }],
+		boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 1, color: 'dimgray' }],
 	},
 
 	containerFlatList: {

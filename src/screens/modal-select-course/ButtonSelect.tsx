@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text } from 'react-native'
+import { useScheme } from '../../hooks/colorScheme'
 
 // state Redux
 import { setModalCourseDB } from '../../store/ducks/modalSlices'
@@ -10,6 +11,7 @@ interface Props {
 export default function ButtonSelect({ handleReturn }: Props) {
 	const modalCourse = useAppSelector((state) => state.modal.modalCourse)
 	const dispatch = useAppDispatch()
+	const scheme = useScheme()
 
 	const isDisabled = modalCourse.length === 0
 
@@ -21,7 +23,7 @@ export default function ButtonSelect({ handleReturn }: Props) {
 	return (
 		<Pressable
 			style={({ pressed }) => [
-				{ backgroundColor: !modalCourse ? '#30A6F655' : '#30A6F6' },
+				{ backgroundColor: !modalCourse ? scheme.primary.concat('22') : scheme.primary },
 				pressed && { opacity: 0.5 },
 				styles.containerPress,
 			]}
@@ -42,7 +44,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		paddingVertical: 2,
 		borderRadius: 5,
-		boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 5, color: '#ccc' }],
 	},
 	text: {
 		textAlign: 'center',
