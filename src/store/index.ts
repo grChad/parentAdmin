@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit'
 import QuizReducer from './ducks/quizSlices'
 import ModalReducer from './ducks/modalSlices'
 import FormReducer from './ducks/formSlices'
+import EditReducer from './ducks/editSlices'
 
 export const store = configureStore({
 	reducer: {
 		quiz: QuizReducer,
 		modal: ModalReducer,
 		form: FormReducer,
+		edit: EditReducer,
 	},
 })
 

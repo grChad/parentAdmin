@@ -12,7 +12,9 @@ import {
 	ModalSelectedCourse,
 } from '../screens'
 import HeaderRight from '../components/home/HeaderRight'
+import EditHeaderRight from '../components/edit-quiz/EditHeaderRight'
 import { IconMenu } from '../components/icons'
+import EditHeaderLeft from '../components/edit-quiz/EditHeaderLeft'
 
 const Stack = createNativeStackNavigator<RootStackParamList>()
 
@@ -49,7 +51,11 @@ export default function StackNavigation({ session }: { session: Session | null }
 						<Stack.Screen
 							name="EditQuiz"
 							component={EditQuizScreen}
-							options={{ title: 'Editar, Eliminar Quiz' }}
+							options={{
+								title: 'Editar',
+								headerLeft: () => <EditHeaderLeft />,
+								headerRight: () => <EditHeaderRight />,
+							}}
 						/>
 					</Stack.Group>
 					<Stack.Group

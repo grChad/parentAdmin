@@ -1,83 +1,38 @@
-import { useState } from 'react'
-import { View, Text, FlatList, Pressable, Image, StyleSheet, Alert } from 'react-native'
+import { View, Text, FlatList, Pressable, Image, StyleSheet } from 'react-native'
 import type { EditQuizRouteProp } from '../../types/navigation'
 import { useScheme } from '../../hooks/colorScheme'
-import { deleteDatabase } from '../../service/methods'
 
 // Store Redux
-import { setUpdateQuizCounter } from '../../store/ducks/quizSlices'
+import { setSelectedIds } from '../../store/ducks/editSlices'
 import { useAppSelector, useAppDispatch } from '../../hooks/store'
-
-import { IconCheck, IconTrash } from '../../components/icons'
 
 interface Props {
 	route: EditQuizRouteProp
 }
 export default function EditQuizScreen({ route }: Props) {
 	const { course } = route.params
-	const [selectId, setSelectId] = useState('')
 	const scheme = useScheme()
-
-	const dataQuiz = useAppSelector((state) => state.quiz.data)
 	const dispatch = useAppDispatch()
 
-	const disabled = selectId.length === 0
-	console.log(disabled)
-	const dataCourse = dataQuiz?.filter((item) => item.course === course)
+	const selectedIds = useAppSelector((state) => state.edit.selectedIds)
+	const dataQuiz = useAppSelector((state) => state.quiz.data)
 
-	const onPressDelete = () => {
-		Alert.alert('¿Estás seguro?', 'Eliminar el Quiz', [
-			{
-				text: 'Cancelar',
-				style: 'cancel',
-			},
-			{
-				text: 'Eliminar',
-				onPress: () => {
-					deleteDatabase(selectId)
-					dispatch(setUpdateQuizCounter())
-					setSelectId('')
-				},
-			},
-		])
+	const dataCourse = dataQuiz?.filter((item) => item.course === course)
+	const toggleSelectId = (id: string) => {
+		if (selectedIds.includes(id)) {
+			dispatch(setSelectedIds(selectedIds.filter((item) => item !== id)))
+		} else {
+			dispatch(setSelectedIds([...selectedIds, id]))
+		}
+	}
+
+	const alternativeStyle = {
+		backgroundColor: scheme.background,
+		color: scheme.secondText,
 	}
 
 	return (
 		<View style={{ flex: 1 }}>
-			<View
-				style={{
-					height: 60,
-					margin: 10,
-					padding: 5,
-					borderRadius: 10,
-					backgroundColor: scheme.primary.concat('55'),
-					flexDirection: 'row',
-					borderWidth: 1,
-					borderColor: scheme.secondText,
-					justifyContent: 'space-evenly',
-				}}
-			>
-				<Pressable
-					disabled={disabled}
-					onPress={onPressDelete}
-					style={{
-						flexDirection: 'row',
-						columnGap: 5,
-						alignItems: 'center',
-						borderWidth: 1,
-						backgroundColor: '#77DDF0',
-						paddingHorizontal: 5,
-						borderRadius: 5,
-						opacity: disabled ? 0.4 : 1,
-					}}
-				>
-					<View>
-						<Text style={{ fontFamily: 'ComicNeue' }}>Delete</Text>
-						<Text style={{ fontFamily: 'ComicNeue' }}>Item</Text>
-					</View>
-					<IconTrash size={25} fill="#ED6157" />
-				</Pressable>
-			</View>
 			<FlatList
 				data={dataCourse}
 				keyExtractor={(item) => item.id}
@@ -85,29 +40,21 @@ export default function EditQuizScreen({ route }: Props) {
 				showsVerticalScrollIndicator={false}
 				renderItem={({ item }) => (
 					<Pressable
-						onLongPress={() => setSelectId(item.id)}
+						onLongPress={() => toggleSelectId(item.id)}
 						style={({ pressed }) => [
-							pressed && { opacity: 0.5 },
+							pressed && { opacity: 0.7 },
 							{
 								margin: 10,
 								padding: 5,
-								backgroundColor: scheme.light,
-								boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 3, color: 'gray' }],
+								backgroundColor: selectedIds.includes(item.id)
+									? scheme.selectPrimary
+									: scheme.card,
 								borderRadius: 8,
 								overflow: 'hidden',
 								position: 'relative',
 							},
 						]}
 					>
-						{selectId === item.id && (
-							<Pressable
-								onPress={() => setSelectId('')}
-								style={{ position: 'absolute', top: 2, left: 2, zIndex: 20 }}
-							>
-								<IconCheck size={30} fill="orange" />
-							</Pressable>
-						)}
-
 						<View
 							style={{
 								flexDirection: 'row',
@@ -124,19 +71,32 @@ export default function EditQuizScreen({ route }: Props) {
 							<Text
 								numberOfLines={2}
 								lineBreakMode="tail"
-								style={[styles.question, { color: '#383838' }]}
+								style={[styles.question, { color: scheme.secondText }]}
 							>
 								{item.question}
 							</Text>
 						</View>
 						<View style={styles.boxAlternatives}>
-							<Text style={[styles.alternatives, { backgroundColor: '#90CDF6' }]}>
+							<Text
+								style={[
+									styles.alternatives,
+									{ backgroundColor: scheme.primary, color: scheme.background },
+								]}
+							>
 								{item.answer_correct}
 							</Text>
-							<Text style={styles.alternatives}>{item.answer_2}</Text>
-							<Text style={styles.alternatives}>{item.answer_3}</Text>
-							{item.answer_4 && <Text style={styles.alternatives}>{item.answer_4}</Text>}
-							{item.answer_5 && <Text style={styles.alternatives}>{item.answer_5}</Text>}
+							<Text style={[styles.alternatives, alternativeStyle]}>{item.answer_2}</Text>
+							<Text style={[styles.alternatives, alternativeStyle]}>{item.answer_3}</Text>
+							{item.answer_4 && (
+								<Text style={[styles.alternatives, alternativeStyle]}>
+									{item.answer_4}
+								</Text>
+							)}
+							{item.answer_5 && (
+								<Text style={[styles.alternatives, alternativeStyle]}>
+									{item.answer_5}
+								</Text>
+							)}
 						</View>
 					</Pressable>
 				)}
@@ -172,8 +132,6 @@ const styles = StyleSheet.create({
 		fontFamily: 'ComicNeue',
 		paddingVertical: 2,
 		paddingHorizontal: 5,
-		backgroundColor: '#B7C4FA',
-		color: '#4D4D4D',
 		borderRadius: 5,
 	},
 })

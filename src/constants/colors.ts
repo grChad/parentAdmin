@@ -67,6 +67,7 @@ export const SchemeDarkColor = {
 	popup: '#484848',
 	pressPopup: '#585858',
 	light: '#D8D5D1',
+	selectPrimary: '#b098e955',
 }
 
 export const SchemeLightColor = {
@@ -76,4 +77,5 @@ export const SchemeLightColor = {
 	popup: '#F5F5F5',
 	pressPopup: '#DFDFDF',
 	light: '#FFFFFF',
+	selectPrimary: '#b098e966',
 }

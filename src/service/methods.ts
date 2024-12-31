@@ -33,3 +33,10 @@ export const deleteDatabase = async (id: string) => {
 		throw new Error('Error al eliminar')
 	}
 }
+
+export const deleteMultipleDatabase = async (ids: string[]) => {
+	const response = await supabase.from('quiz').delete().in('id', ids)
+	if (response.status !== 204) {
+		throw new Error('Error al eliminar multiples elementos')
+	}
+}
